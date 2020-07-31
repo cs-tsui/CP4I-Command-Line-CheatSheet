@@ -6,9 +6,8 @@
 ```
 cloudctl login -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -n eventstreams --skip-kubectl-config
 
+# Choose instance if there are multiple deployed
 cloudctl es init -n eventstreams
-
-# choose the v-3 event streams instance, and run various 'cloudctl es' commands against it
 ```
 
 ## Cloudctl for Managing EventStreams
@@ -41,4 +40,4 @@ helm repo add local-charts https://icp-console.your.cluster.url:443/helm-repo/ch
 helm repo list
 
 helm search local-charts/ --versions
-``
+```
