@@ -25,6 +25,11 @@ cloudctl catalog load-archive \
 ```
 
 ## Cloudctl for Managing EventStreams
+
+Public download link for ES plugin. (Without ability to log in as default CP4I cluster admin, this comes in handy). It is backwards compatible.
+
+http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/eventstreams/cli-plugin/
+
 ```
 # Choose instance if there are multiple deployed
 cloudctl es init -n eventstreams
