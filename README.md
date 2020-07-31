@@ -31,7 +31,6 @@ cloudctl login -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.
 # Or single command to login as default CP4I admin 
 cloudctl login -n integration -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -u admin -p $(oc get secrets -n kube-system platform-auth-idp-credentials -ojsonpath='{.data.admin_password}' | base64 --decode ) --skip-kubectl-config
 
-#
 ```
 
 ## Cloudctl for Managing EventStreams
@@ -44,7 +43,7 @@ cloudctl es init -n eventstreams
 # Permissions need to be added to IAM team in common services for new ES instances
 # to access the ES UI properly. Otherwise you will see 403 error even if user has
 # cluster admin role via IAM teams
-#
+
 cloudctl iam teams
 
 # Install if it isn't already 
@@ -57,7 +56,7 @@ cloudctl es iam-add-release-to-team --team "Team Name"
 
 #
 # Download the ES cert using the CLI instead of the UI
-#
+
 # JKS
 cloudctl es certificates
 
@@ -96,7 +95,7 @@ helm upgrade --reuse-values --set kafka.brokers=3 es-admin-deployed local-charts
 
 
 
-## Docker Internal Registry
+## Openshift Internal Registry
 ```
 # Get exposed registry route
 oc get route default-route -n openshift-image-registry -ojsonpath='{.spec.host}'
@@ -106,4 +105,21 @@ docker login $(oc get route default-route -n openshift-image-registry -ojsonpath
 
 # As another user
 docker login $(oc get route default-route -n openshift-image-registry -ojsonpath='{.spec.host}') -u $(oc whoami) -p $(oc whoami -t) 
+```
+
+
+## EventStreams REST API
+```
+# Store the variables for a shorter curl
+# All these info can be fetched from the ES UI Home page
+REST_ROUTE=<rest_api_route>
+ES_API_KEY=<api_key>
+CA_CERT=<es_cert_pem_path>
+TOPIC=<topic_name>
+
+# REST API test
+curl -k -v -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d 'test message' --cacert $CA_CERT "$REST_ROUTE/topics/$TOPIC/records"
+
+# Simple Loop to keep sending
+for ((i=1;i<=500;i++)); do curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/multipartition/records"; sleep 1; done
 ```
