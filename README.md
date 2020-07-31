@@ -1,8 +1,11 @@
 # CP4I-Commandline-CheatSheet
 
-## Cloudctl
+## CP4I Info & Cloudctl
 
 ```
+# Shows CP4I endpoints, ports, and version
+oc get configmap ibmcloud-cluster-info -o yaml
+
 # Login with fetched route
 cloudctl login -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -n eventstreams --skip-kubectl-config
 
@@ -11,13 +14,20 @@ cloudctl login -n integration -a $(oc get routes -n kube-system icp-console -ojs
 
 # List local charts pushed in if offline install
 cloudctl catalog charts --repo local-charts
+
+# Manually push capability archive
+# If inside the installer icp4icontent directory
+cloudctl catalog load-archive \
+    --archive IBM-DataPower-Virtual-Edition-for-IBM-Cloud-Pak-for-Integration-1.0.5.tgz \
+    --image-registry default-route-openshift-image-registry.apps.cstsui.ocp.csplab.local/datapower \
+    --chart-registry local-charts
+
 ```
 
 ## Cloudctl for Managing EventStreams
 ```
 # Choose instance if there are multiple deployed
 cloudctl es init -n eventstreams
-
 
 # Permissions need to be added to IAM team in common services for new ES instances
 # to access the ES UI properly. Otherwise you will see 403 error even if user has
@@ -98,14 +108,16 @@ helm upgrade --reuse-values --set kafka.brokers=3 es-admin-deployed local-charts
 
 ## Openshift Internal Registry
 ```
-# Get exposed registry route
-oc get route default-route -n openshift-image-registry -ojsonpath='{.spec.host}'
+# Get exposed registry route and store in a variable
+IMG_ROUTE=$(oc get route default-route -n openshift-image-registry -ojsonpath='{.spec.host}')
 
-# As kubeadmin
-docker login $(oc get route default-route -n openshift-image-registry -ojsonpath='{.spec.host}') -u kubeadmin -p $(oc whoami -t) 
+# Login to internal registry with route. Username can be any value with no colons
+docker login $IMG_ROUTE -u user -p $(oc whoami -t) 
 
-# As another user
-docker login $(oc get route default-route -n openshift-image-registry -ojsonpath='{.spec.host}') -u $(oc whoami) -p $(oc whoami -t) 
+# Example tag and push
+docker tag cstsui/kafkaconnect-mq $IMG_ROUTE/kconnect-e2e/kafkaconnect-mq
+
+docker push $IMG_ROUTE/kconnect-e2e/kafkaconnect-mq
 ```
 
 ## Accessing IBM Entitled Registry
