@@ -15,13 +15,11 @@ cloudctl login -n integration -a $(oc get routes -n kube-system icp-console -ojs
 # List local charts pushed in if offline install
 cloudctl catalog charts --repo local-charts
 
-# Manually push capability archive
-# If inside the installer icp4icontent directory
+# Manually push capability archive if inside the installer icp4icontent directory
 cloudctl catalog load-archive \
     --archive IBM-DataPower-Virtual-Edition-for-IBM-Cloud-Pak-for-Integration-1.0.5.tgz \
     --image-registry default-route-openshift-image-registry.apps.cstsui.ocp.csplab.local/datapower \
     --chart-registry local-charts
-
 ```
 
 ## Cloudctl for Managing EventStreams
@@ -107,6 +105,9 @@ helm search local-charts/ibm-eventstreams-icp4i-prod
 
 # Upgrade the number of brokers in the Kafka cluster
 helm upgrade --reuse-values --set kafka.brokers=3 es-admin-deployed local-charts/ibm-eventstreams-icp4i-prod --tls
+
+# Get the helm values used to deploy the capability for a release
+helm get values release-name --tls
 ```
 
 
@@ -149,9 +150,12 @@ ES_API_KEY=<api_key>
 CA_CERT=<es_cert_pem_path>
 TOPIC=<topic_name>
 
+# REST API Route
+oc get route -n eventstreams | grep rest-route
+
 # REST API test
 curl -k -v -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d 'test message' --cacert $CA_CERT "$REST_ROUTE/topics/$TOPIC/records"
 
-# Simple Loop to keep sending
+# Simple loop to keep sending for a while for testing
 for ((i=1;i<=500;i++)); do curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/multipartition/records"; sleep 1; done
 ```
