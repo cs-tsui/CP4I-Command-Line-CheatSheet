@@ -18,8 +18,11 @@ cloudctl catalog charts --repo local-charts
 # Manually push capability archive if inside the installer icp4icontent directory
 cloudctl catalog load-archive \
     --archive IBM-DataPower-Virtual-Edition-for-IBM-Cloud-Pak-for-Integration-1.0.5.tgz \
-    --image-registry default-route-openshift-image-registry.apps.cstsui.ocp.csplab.local/datapower \
+    --image-registry $IMG_REGISTRY_ROUTE/datapower \
     --chart-registry local-charts
+    
+# Change default admin password
+cloudctl pm update-secret kube-system platform-auth-idp-credentials -d admin_password=notadmin
 ```
 
 ## Cloudctl for Managing EventStreams
@@ -56,9 +59,9 @@ cloudctl es certificates --format pem
 ```
 
 
-## Finding Admin Creds
+## Admin Creds
 ```
-# Default Admin Password
+# Getting default admin password
 
 # 2020.2
 oc get secrets -n ibm-common-services platform-auth-idp-credentials -ojsonpath='{.data.admin_password}' | base64 --decode && echo "" 
