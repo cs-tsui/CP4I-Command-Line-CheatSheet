@@ -1,7 +1,9 @@
 ## Working with Kafka Connect REST API
 
+
+### Create Connector
 ```
-# Prep - After Kafka Connent Deployment is Created
+# Prep - After Kafka Connent Deployment is created and service is created
 
 # Get Kafka Connect REST endpoint (if exposed through route)
 KC_ROUTE=$(oc get routes kafkaconnect-service -n kafka-connect -ojsonpath='{.spec.host}')
@@ -78,4 +80,22 @@ curl -X POST \
 	    "value.converter":"org.apache.kafka.connect.converters.StringConverter"
     }
 }'
+```
+
+
+### Other actions 
+```
+# Get status
+curl $KC_ROUTE/connectors/<connector_name>/status
+
+# Pause
+curl -X PUT $KC_ROUTE/connectors/<connector_name>/pause
+
+# Update
+curl -x PUT $KC_ROUTE/connectors/<connector_name>/config \
+	-H 'Content-Type: application/json' \
+	-d @updated_connector.json
+
+# Delete
+curl -X DELETE $KC_ROUTE/connectors/<connector_name>
 ```
