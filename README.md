@@ -95,11 +95,16 @@ helm repo add local-charts https://icp-console.your.cluster.url:443/helm-repo/ch
 helm repo list
 
 helm search local-charts/ --versions
+
+# Add entitled charts repo
+helm repo add entitled-charts https://raw.githubusercontent.com/IBM/charts/master/repo/entitled/
 ```
 
 
 ## Handy Helm Commands
 ```
+# Replace local-charts with another repo of interest
+
 # List all charts in local-chart repo (must be added first like using prior steps)
 helm search local-charts
 
