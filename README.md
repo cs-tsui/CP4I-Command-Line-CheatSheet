@@ -118,6 +118,9 @@ helm search local-charts/ibm-eventstreams-icp4i-prod
 # Upgrade the number of brokers in the Kafka cluster
 helm upgrade --reuse-values --set kafka.brokers=3 es-admin-deployed local-charts/ibm-eventstreams-icp4i-prod --tls
 
+# Get all the generated YAML from the helm release
+helm get release-name --tls
+
 # Get the helm values used to deploy the capability for a release
 helm get values release-name --tls
 ```
