@@ -1,4 +1,4 @@
-# CP4I-Commandline-CheatSheet
+# CP4I-Command-line-CheatSheet
 
 This is a cheatsheet for working with IBM Cloud Pak for Integration. The following commands are mostly geared towards cluster administrators, but some commands may also be useful for CP4I users.
 
@@ -71,7 +71,7 @@ cloudctl es certificates --format pem
 oc get secrets -n ibm-common-services platform-auth-idp-credentials -ojsonpath='{.data.admin_password}' | base64 --decode && echo "" 
 
 # 2020.1
-oc get secrets -n kube-system platform-auth-idp-credentials -ojsonpath='{.data.admin_password}' | base64 --decode && echo "" 
+oc get secrets -n kube-system platform-auth-idp-credentials -ojsonpath='{.data.admin_password}' | base64 --decode && echo ""
 ```
 
 
