@@ -24,7 +24,7 @@ curl -X POST $KC_ROUTE/connectors \
 {
 	"name":"mq-source02",
 	"config": {
-		  "mq.message.body.jms": true,
+            "mq.message.body.jms": true,
 	    "connector.class":"com.ibm.eventstreams.connect.mqsource.MQSourceConnector",
 	    "tasks.max":"1",
 	    "mq.user.name":"admin", 
@@ -35,8 +35,7 @@ curl -X POST $KC_ROUTE/connectors \
 	    "mq.channel.name":"DEV.APP.SVRCONN",
 	    "mq.queue":"FROM.MQ.TO.ES",
 	    "mq.record.builder":"com.ibm.eventstreams.connect.mqsource.builders.DefaultRecordBuilder",
-	    "key.converter":"org.apache.kafka.connect.converters.ByteArrayConverter",
-	    "value.converter":"org.apache.kafka.connect.converters.ByteArrayConverter"
+	    "value.converter":"org.apache.kafka.connect.converters.StringConverter"
     }
 }
 
