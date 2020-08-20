@@ -154,6 +154,15 @@ oc create secret docker-registry ibm-entitlement-key \
 docker login cp.icr.io --username cp --password <api-key>
 ```
 
+## Checking Images in Docker Registrys
+
+```
+# Docker registry
+curl -X GET 'your-registry:5000/v2/_catalog?n=5000' | jq . - | tee registry.txt
+
+# OCP Internal Registry
+curl -k -u kubeadmin:$(oc whoami -t) -X GET https://default-route-openshift-image-registry.ocp.cluster/v2/_catalog?n=500
+```
 
 
 ## EventStreams REST API
