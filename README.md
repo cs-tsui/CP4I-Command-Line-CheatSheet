@@ -154,7 +154,7 @@ oc create secret docker-registry ibm-entitlement-key \
 docker login cp.icr.io --username cp --password <api-key>
 ```
 
-## Checking Images in Docker Registrys
+## Checking Images in Docker Registries
 
 ```
 # Docker registry
