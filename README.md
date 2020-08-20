@@ -183,3 +183,29 @@ curl -k -v -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text
 # Simple loop to keep sending for a while for testing
 for ((i=1;i<=500;i++)); do curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/multipartition/records"; sleep 1; done
 ```
+
+## CLI Autocomplete Setup
+
+Add autocompletion for your shell. Skip the one's you already have or don't want/need. Note this may increase the time it takes to load your shell.
+
+```
+# zsh
+echo 'source <(kubectl completion zsh)' >>~/.zshrc
+echo 'source <(oc completion zsh)' >>~/.zshrc
+echo 'source <(cloudctl completion zsh)' >>~/.zshrc
+echo 'source <(helm completion zsh)' >>~/.zshrc
+
+# Reload your current terminal with completion functions
+source ~/.zshrc
+```
+
+```
+# bash
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo 'source <(oc completion bash)' >>~/.bashrc
+echo 'source <(cloudctl completion bash)' >>~/.bashrc
+echo 'source <(helm completion bash)' >>~/.bashrc
+
+# Reload your current terminal with completion functions
+source ~/.bashrc
+```
