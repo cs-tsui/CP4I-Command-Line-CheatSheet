@@ -109,9 +109,12 @@ oc get secret -n mq | grep 'deployer-dockercfg'
 ```
 
 
-## Helm CLI via Web Terminal
+## Handy Helm Commands
 
 ```
+# Get local-charts repo URL from cloudctl
+cloudctl catalog repos | grep local-charts | awk '{print $2}'
+
 helm init --client-only
 
 # Add the "local-charts" repo inside the cluster to Helm in the web terminal session
@@ -123,21 +126,15 @@ helm search local-charts/ --versions
 
 # Add entitled charts repo
 helm repo add entitled-charts https://raw.githubusercontent.com/IBM/charts/master/repo/entitled/
-```
 
-
-## Handy Helm Commands
-```
-# Replace local-charts with another repo of interest
-
-# List all charts in local-chart repo (must be added first like using prior steps)
+# List all charts in local-chart repo (or any other repo you've added)
 helm search local-charts
 
 # Search for a specific chart
 helm search local-charts/ibm-eventstreams-icp4i-prod
 
 # Upgrade the number of brokers in the Kafka cluster
-helm upgrade --reuse-values --set kafka.brokers=3 es-admin-deployed local-charts/ibm-eventstreams-icp4i-prod --tls
+helm upgrade --reuse-values --set kafka.brokers=3 es-release-name local-charts/ibm-eventstreams-icp4i-prod --tls
 
 # Get all the generated YAML from the helm release
 helm get release-name --tls
