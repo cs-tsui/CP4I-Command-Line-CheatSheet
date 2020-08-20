@@ -1,15 +1,39 @@
+
 # CP4I-Command-line-CheatSheet
 
 This is a cheatsheet for working with IBM Cloud Pak for Integration. The following commands are mostly geared towards cluster administrators, but some commands may also be useful for CP4I users.
 
 For version `2020.1` and below, common services reside in the `kube-system` namesapce. For version 2020.2, common services reside in namespace `ibm-common-services`. Commands targeting the `kube-system` namespace may need to target `ibm-common-services` instead for the latest CP4I release.
 
-## CP4I Info & Cloudctl
+- [CP4I Info](#cp4i-info)
+- [cloudctl](#cloudctl)
+- [cloudctl for Managing Event Streams](#cloudctl-for-managing-event-streams)
+- [Admin Credentials](#admin-credentials)
+- [Secrets for Deploying Capabilities](#secrets-for-deploying-capabilities)
+- [Helm CLI via Web Terminal](#helm-cli-via-web-terminal)
+- [Handy Helm Commands](#handy-helm-commands)
+- [Openshift Internal Registry](#openshift-internal-registry)
+- [Accessing IBM Entitled Registry](#accessing-ibm-entitled-registry)
+- [Checking Images in Docker Registries](#checking-images-in-docker-registries)
+- [EventStreams REST API](#eventstreams-rest-api)
+- [CLI Autocomplete Setup](#cli-autocomplete-setup)
+
+
+## CP4I Info
 
 ```
 # Shows CP4I endpoints, ports, and version
-oc get configmap ibmcloud-cluster-info -o yaml -n kube-public
 
+# 2020.2
+oc get configmap ibmcloud-cluster-info -o yaml -n ibm-common-services
+
+# 2020.1
+oc get configmap ibmcloud-cluster-info -o yaml -n kube-public
+```
+
+## cloudctl
+
+```
 # Login with fetched route
 cloudctl login -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -n eventstreams --skip-kubectl-config
 
@@ -29,7 +53,7 @@ cloudctl catalog load-archive \
 cloudctl pm update-secret kube-system platform-auth-idp-credentials -d admin_password=notadmin
 ```
 
-## Cloudctl for Managing EventStreams
+## cloudctl for Managing Event Streams
 
 Public download link for ES plugin. (Without ability to log in as default CP4I cluster admin, this comes in handy). It is backwards compatible.
 
@@ -63,7 +87,7 @@ cloudctl es certificates --format pem
 ```
 
 
-## Admin Creds
+## Admin Credentials
 ```
 # Getting default admin password
 
@@ -75,7 +99,7 @@ oc get secrets -n kube-system platform-auth-idp-credentials -ojsonpath='{.data.a
 ```
 
 
-## Deploying Capabilities
+## Secrets for Deploying Capabilities
 ```
 # Copying ibm-entitlement-key from one namespace to another
 oc get secret ibm-entitlement-key --namespace=src-ns --export -o yaml | kubectl apply --namespace=target-ns -f -
@@ -90,10 +114,7 @@ oc get secret -n mq | grep 'deployer-dockercfg'
 ```
 helm init --client-only
 
-# Find home user directory
-ls -lah ~/
-
-# Use the user id
+# Add the "local-charts" repo inside the cluster to Helm in the web terminal session
 helm repo add local-charts https://icp-console.your.cluster.url:443/helm-repo/charts --ca-file /home/65551/.helm/ca.pem --cert-file /home/65551/.helm/cert.pem --key-file /home/65551/.helm/key.pem
 
 helm repo list
