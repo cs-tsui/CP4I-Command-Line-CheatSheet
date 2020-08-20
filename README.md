@@ -10,7 +10,6 @@ For version `2020.1` and below, common services reside in the `kube-system` name
 - [cloudctl for Managing Event Streams](#cloudctl-for-managing-event-streams)
 - [Admin Credentials](#admin-credentials)
 - [Secrets for Deploying Capabilities](#secrets-for-deploying-capabilities)
-- [Helm CLI via Web Terminal](#helm-cli-via-web-terminal)
 - [Handy Helm Commands](#handy-helm-commands)
 - [Openshift Internal Registry](#openshift-internal-registry)
 - [Accessing IBM Entitled Registry](#accessing-ibm-entitled-registry)
