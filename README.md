@@ -1,9 +1,11 @@
 
-# CP4I-Command-line-CheatSheet
+# CP4I Command-Line CheatSheet
 
 This is a cheatsheet for working with IBM Cloud Pak for Integration. The following commands are mostly geared towards cluster administrators, but some commands may also be useful for CP4I users.
 
 For version `2020.1` and below, common services reside in the `kube-system` namesapce. For version `2020.2`, common services reside in namespace `ibm-common-services`. Commands targeting the `kube-system` namespace may need to target `ibm-common-services` instead for the latest CP4I release.
+
+### Table of Content
 
 - [CP4I Info](#cp4i-info)
 - [cloudctl](#cloudctl)
