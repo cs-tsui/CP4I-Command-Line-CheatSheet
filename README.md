@@ -18,7 +18,7 @@ For version `2020.1` and below, common services reside in the `kube-system` name
 - [Checking Images in Docker Registries](#checking-images-in-docker-registries)
 - [EventStreams REST API](#eventstreams-rest-api)
 - [CLI Autocomplete Setup](#cli-autocomplete-setup)
-
+- [
 
 ## CP4I Info
 
@@ -202,6 +202,18 @@ curl -k -v -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text
 # Simple loop to keep sending for a while for testing
 for ((i=1;i<=500;i++)); do curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/multipartition/records"; sleep 1; done
 ```
+
+## Add SCC to User or Group
+
+```
+# Add SCC to default service account in "cp4i" Namesapce
+oc adm policy add-scc-to-user restricted system:serviceaccounts:cp4i:default
+
+
+# Add SCC to group of service accounts in "cp4i" namespace 
+oc adm policy add-scc-to-group ibm-anyuid-scc system:serviceaccounts:cp4i
+```
+
 
 ## CLI Autocomplete Setup
 
