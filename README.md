@@ -18,7 +18,7 @@ For version `2020.1` and below, common services reside in the `kube-system` name
 - [Checking Images in Docker Registries](#checking-images-in-docker-registries)
 - [EventStreams REST API](#eventstreams-rest-api)
 - [CLI Autocomplete Setup](#cli-autocomplete-setup)
-- [
+- [Add SCC to User or Group](#add-scc-to-user-or-group)
 
 ## CP4I Info
 
