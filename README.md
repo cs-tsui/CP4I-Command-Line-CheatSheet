@@ -200,14 +200,16 @@ oc get route -n eventstreams | grep rest-route
 curl -k -v -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d 'test message' --cacert $CA_CERT "$REST_ROUTE/topics/$TOPIC/records"
 
 # Simple loop to keep sending for a while for testing
-for ((i=1;i<=500;i++)); do curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/multipartition/records"; sleep 1; done
+for ((i=1;i<=500;i++)); do
+    curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/multipartition/records"; sleep 1;
+done
 ```
 
 ## Add SCC to User or Group
 
 ```
 # Add SCC to default service account in "cp4i" Namesapce
-oc adm policy add-scc-to-user restricted system:serviceaccounts:cp4i:default
+oc adm policy add-scc-to-user restricted system:serviceaccount:cp4i:default
 
 
 # Add SCC to group of service accounts in "cp4i" namespace 
