@@ -103,7 +103,7 @@ oc get secrets -n kube-system platform-auth-idp-credentials -ojsonpath='{.data.a
 ## Secrets for Deploying Capabilities
 ```
 # Copying ibm-entitlement-key from one namespace to another
-oc get secret ibm-entitlement-key --namespace=src-ns --export -o yaml | kubectl apply --namespace=target-ns -f -
+oc get secret ibm-entitlement-key --namespace=src-ns --export -o yaml | oc apply --namespace=target-ns -f -
 
 # Get Secret for deploying local-chart into the target namespace
 oc get secret -n mq | grep 'deployer-dockercfg'
