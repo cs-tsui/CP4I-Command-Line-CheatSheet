@@ -65,8 +65,8 @@ http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/eventstr
 cloudctl es init -n eventstreams
 
 # Permissions need to be added to IAM team in common services for new ES instances
-# to access the ES UI properly. Otherwise you will see 403 error even if user has
-# cluster admin role via IAM teams
+# to access the ES UI properly. If 403 errors appear when trying to access the UI
+# and permissions is managed via IAM teams, the following steps needs to be taken
 
 cloudctl iam teams
 
@@ -76,8 +76,11 @@ cloudctl plugin install <es-plugin-path>
 cloudctl es init -n eventstreams
 
 # Add the team to the ES release
-cloudctl es iam-add-release-to-team --team "Team Name"
+cloudctl es iam-add-release-to-team --team "your-team-name"
+```
 
+## cloudctl to download Event Streams certs
+```
 # Download the ES cert using the CLI instead of the UI
 
 # JKS
