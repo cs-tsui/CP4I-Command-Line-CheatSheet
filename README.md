@@ -36,10 +36,10 @@ oc get configmap ibmcloud-cluster-info -o yaml -n kube-public
 
 ```
 # Login with fetched route
-cloudctl login -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -n eventstreams --skip-kubectl-config
+cloudctl login -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -n eventstreams --skip-kubectl-config --skip-ssl-validation
 
 # Or single command to login as default CP4I admin 
-cloudctl login -n integration -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -u admin -p $(oc get secrets -n kube-system platform-auth-idp-credentials -ojsonpath='{.data.admin_password}' | base64 --decode ) --skip-kubectl-config
+cloudctl login -n integration -a $(oc get routes -n kube-system icp-console -ojsonpath='{.spec.host}') -u admin -p $(oc get secrets -n kube-system platform-auth-idp-credentials -ojsonpath='{.data.admin_password}' | base64 --decode ) --skip-kubectl-config --skip-ssl-validation
 
 # List local charts pushed in if offline install
 cloudctl catalog charts --repo local-charts
