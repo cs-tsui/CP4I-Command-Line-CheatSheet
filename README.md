@@ -204,7 +204,7 @@ curl -k -v -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text
 
 # Simple loop to keep sending for a while for testing
 for ((i=1;i<=500;i++)); do
-    curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/multipartition/records"; sleep 1;
+    curl -k -X POST -H "Authorization: Bearer $ES_API_KEY" -H "Content-Type: text/plain" -H "Accept: application/json" -d "test message $i" --cacert es-cert.pem "$REST_ROUTE/topics/$TOPIC/records"; sleep 1;
 done
 ```
 
