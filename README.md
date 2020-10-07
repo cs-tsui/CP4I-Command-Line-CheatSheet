@@ -3,7 +3,7 @@
 
 This is a cheatsheet for working with IBM Cloud Pak for Integration. The following commands are mostly geared towards cluster administrators, but some commands may also be useful for CP4I users.
 
-For version `2020.1` and below, common services reside in the `kube-system` namesapce. For version `2020.2`, common services reside in namespace `ibm-common-services`. Commands targeting the `kube-system` namespace may need to target `ibm-common-services` instead for the latest CP4I release.
+For version `2020.1` and below, common services reside in the `kube-system` namesapce. For version `2020.2` and greater, CP4I has moved to an operator based model, and common services reside in namespace `ibm-common-services`. Commands targeting the `kube-system` namespace may need to target `ibm-common-services` instead for the latest CP4I release.
 
 ### Table of Content
 
@@ -20,9 +20,12 @@ For version `2020.1` and below, common services reside in the `kube-system` name
 - [CLI Autocomplete Setup](#cli-autocomplete-setup)
 - [Add SCC to User or Group](#add-scc-to-user-or-group)
 
-## CP4I Info
+## CP4I Info and Common Servics
 
 ```
+# Show Common Services Ready Status
+oc get configmap ibm-common-services-status -o jsonpath='{.data.iamstatus}' -n kube-public
+
 # Shows CP4I endpoints, ports, and version
 
 # 2020.2
