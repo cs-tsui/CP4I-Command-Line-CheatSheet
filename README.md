@@ -30,6 +30,9 @@ oc get configmap ibm-common-services-status -o jsonpath='{.data.iamstatus}' -n k
 # ROKS_USER_PREFIX needs to be 'IAM#'
 oc get configmap -n ibm-common-services platform-auth-idp -o yaml | grep 'ROKS_'
 
+# Update common services subscriptions to be manually updated
+oc get subscriptions -n ibm-common-services -o json | jq -r '.items[] | .metadata.name' | \
+    xargs -I {} oc patch subscription {} --type=merge -p '{"spec":{"installPlanApproval":"Manual"}}' -n ibm-common-services
 
 # Shows CP4I endpoints, ports, and version
 
