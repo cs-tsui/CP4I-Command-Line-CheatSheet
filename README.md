@@ -7,7 +7,7 @@ For version `2020.1` and below, common services reside in the `kube-system` name
 
 ### Table of Content
 
-- [CP4I Info](#cp4i-info)
+- [CP4I Info and Common Services](#cp4i-info-and-common-services)
 - [Cloudctl (General)](#cloudctl)
 - [Cloudctl (Managing Event Streams)](#cloudctl-for-managing-event-streams)
 - [Admin Credentials](#admin-credentials)
@@ -20,11 +20,16 @@ For version `2020.1` and below, common services reside in the `kube-system` name
 - [CLI Autocomplete Setup](#cli-autocomplete-setup)
 - [Add SCC to User or Group](#add-scc-to-user-or-group)
 
-## CP4I Info and Common Servics
+## CP4I Info and Common Services
 
 ```
 # Show Common Services Ready Status
 oc get configmap ibm-common-services-status -o jsonpath='{.data.iamstatus}' -n kube-public
+
+# Show if Openshift Auth is configured properly (IBM Cloud ROKS)
+# ROKS_USER_PREFIX needs to be 'IAM#'
+oc get configmap -n ibm-common-services platform-auth-idp -o yaml | grep 'ROKS_'
+
 
 # Shows CP4I endpoints, ports, and version
 
