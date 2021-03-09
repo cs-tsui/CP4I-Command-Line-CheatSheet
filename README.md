@@ -34,6 +34,9 @@ oc get configmap -n ibm-common-services platform-auth-idp -o yaml | grep 'ROKS_'
 oc get subscriptions -n ibm-common-services -o json | jq -r '.items[] | .metadata.name' | \
     xargs -I {} oc patch subscription {} --type=merge -p '{"spec":{"installPlanApproval":"Manual"}}' -n ibm-common-services
 
+# Enabling ingress traffic through default namesapce
+oc label namespace default 'network.openshift.io/policy-group=ingress'
+
 # Shows CP4I endpoints, ports, and version
 
 # 2020.2
@@ -63,6 +66,9 @@ cloudctl catalog load-archive \
     
 # Change default admin password
 cloudctl pm update-secret kube-system platform-auth-idp-credentials -d admin_password=notadmin
+
+# For mirroring CASE images, and use `skopeo` instead, set ENV VAR
+USE_SKOPEO=1
 ```
 
 ## cloudctl for Managing Event Streams
