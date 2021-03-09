@@ -69,6 +69,9 @@ cloudctl pm update-secret kube-system platform-auth-idp-credentials -d admin_pas
 
 # For mirroring CASE images, and use `skopeo` instead, set ENV VAR
 USE_SKOPEO=1
+
+# Save log trace to file
+CLOUDCTL_TRACE=/opt/cloudctl-trace.log
 ```
 
 ## cloudctl for Managing Event Streams
